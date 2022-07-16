@@ -21,8 +21,9 @@ galleryEl.insertAdjacentHTML('afterbegin', galleryImages);
 function galleryHandler(event) {
     event.preventDefault();
     const originalImage = event.target.dataset.source;
-    event.target.src = originalImage;
-    const modal = basicLightbox.create(event.target);
+    const modal = basicLightbox.create(`
+        <img src="${originalImage}" width="800" height="600">
+    `);
     modal.show();
 }
 
