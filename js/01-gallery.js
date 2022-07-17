@@ -21,10 +21,28 @@ galleryEl.insertAdjacentHTML('afterbegin', galleryImages);
 function galleryHandler(event) {
     event.preventDefault();
     const originalImage = event.target.dataset.source;
-    const modal = basicLightbox.create(`
+    const modal = basicLightbox.create(
+        `
         <img src="${originalImage}" width="800" height="600">
-    `);
+    `,
+        {
+            onShow: () => {
+                window.addEventListener('keydown', onEscPress);
+            },
+        },
+        {
+            onClose: () => {
+                window.removeEventListener('keydown', onEscPress);
+            },
+        },
+    );
     modal.show();
+
+    function onEscPress(e) {
+        if (e.code === 'Escape') {
+            modal.close();
+        }
+    }
 }
 
 galleryEl.addEventListener('click', galleryHandler);
